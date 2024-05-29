@@ -16,8 +16,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
-import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,6 +34,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,7 +56,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp(modifier: Modifier = Modifier) {
     var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) } // value 를 계속 입력하지 않게 하기 위함
 
-    Surface(modifier) {
+    Surface(modifier, color = MaterialTheme.colorScheme.background) {
         if (shouldShowOnboarding) {
             OnboardingScreen(
                 modifier = modifier.fillMaxSize(),
@@ -70,7 +77,19 @@ fun Greetings(modifier: Modifier = Modifier, names: List<String> = List(1000) { 
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+private fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary
+        ),
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        CardContent(name)
+    }
+}
+
+@Composable
+fun CardContent(name: String, modifier: Modifier = Modifier) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         if (expanded) 48.dp else 0.dp,
@@ -99,14 +118,25 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                         .padding(bottom = extraPadding.coerceAtLeast(0.dp))
                 ) {
                     Text(text = "Hello ")
-                    Text(text = name, style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold))
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.ExtraBold)
+                    )
                 }
-                ElevatedButton(onClick = { expanded = !expanded }) {
-                    Text(text = if (expanded) "Show less" else "Show more")
+                IconButton(onClick = { expanded = !expanded }) {
+                    Icon(
+                        imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                        contentDescription = if (expanded) stringResource(id = R.string.show_less)
+                        else stringResource(id = R.string.show_less)
+                    )
+
                 }
             }
             if (expanded) {
-                Text(text = "more text", modifier = Modifier.padding(vertical = 20.dp))
+                Text(
+                    text = stringResource(id = R.string.more_text).repeat(10),
+                    modifier = Modifier.padding(vertical = 20.dp)
+                )
             }
         }
 
@@ -120,12 +150,12 @@ fun OnboardingScreen(modifier: Modifier = Modifier, onContinueClick: () -> Unit)
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text("Welcome to the basics Codelab!")
+        Text(stringResource(id = R.string.welcome_compose))
         Button(
             modifier = Modifier.padding(vertical = 24.dp),
             onClick = onContinueClick
         ) {
-            Text("Continue")
+            Text(stringResource(id = R.string.txt_continue))
         }
     }
 }
@@ -154,7 +184,7 @@ fun OnboardingPreview() {
     }
 }
 
-@Preview(uiMode = UI_MODE_NIGHT_YES)
+@Preview
 @Composable
 fun MyAppPreview() {
     Hw_ComposeTheme {
