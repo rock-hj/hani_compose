@@ -102,3 +102,59 @@ fun Greetings(modifier: Modifier = Modifier, names: List<String> = List(1000) { 
 
 <br/>
 
+
+
+<details>
+<summary>애니메이션 동적 변화</summary>
+<div>
+
+* 동적 변화 시 padding 을 주게 되는 경우 0.dp 일 때 - 값을 가지게 됨
+* `coereceAtLeast` 를 통해 최소 값을 주는 것을 필요로 함
+
+```kotlin
+var expanded by rememberSaveable { mutableStateOf(false) }
+val extraPadding by animateDpAsState(
+   if (expanded) 48.dp else 0.dp,
+   animationSpec = spring(
+      dampingRatio = Spring.DampingRatioMediumBouncy,
+      stiffness = Spring.StiffnessLow
+   ),
+   label = ""
+)
+
+Surface(
+   color = MaterialTheme.colorScheme.primary,
+   modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+) {
+   Column(
+      modifier = Modifier
+         .fillMaxWidth()
+         .padding(24.dp)
+   ) {
+      Row(
+         verticalAlignment = Alignment.CenterVertically
+      ) {
+         Column(
+            modifier = Modifier
+               .weight(1f)
+               .padding(bottom = extraPadding.coerceAtLeast(0.dp))
+         ) {
+            Text(text = "Hello ")
+            Text(text = name)
+         }
+         ElevatedButton(onClick = { expanded = !expanded }) {
+            Text(text = if (expanded) "Show less" else "Show more")
+         }
+      }
+      if (expanded) {
+         Text(text = "more text", modifier = Modifier.padding(vertical = 20.dp))
+      }
+   }
+
+}
+```
+</div>
+</details>
+
+<br/>
+
