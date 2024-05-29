@@ -76,3 +76,29 @@ fun Child(count: Int, onClick: () -> Unit) {
 </details>
 
 <br/>
+
+
+
+<details>
+<summary>LazyColumn / LazyRow</summary>
+<div>
+
+* RecyclerView 와 동일하다고 함.
+* `LazyColumn` 은 `RecyclerView` 와 같은 하위 요소를 재활용하지 않음 -> 그럼 왜 동일하다고 한 건지 궁금쓰
+  * 단, 컴포저블을 방출하는 것이 Android View 를 인스턴스화 하는 것보다 상대적으로 비용이 적게 듬 -> 성능 유지
+
+```kotlin
+@Composable
+fun Greetings(modifier: Modifier = Modifier, names: List<String> = List(1000) { "$it" }) {
+   LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
+      items(items = names) { name ->
+         Greeting(name = name)
+      }
+   }
+}
+```
+</div>
+</details>
+
+<br/>
+
