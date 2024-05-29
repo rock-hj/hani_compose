@@ -1,10 +1,10 @@
 *.iml
 .gradle
-Chapter_1/CodeLab_1/local.properties
-Chapter_1/CodeLab_1/.idea/*
+Chapter_1/*/local.properties
+Chapter_1/*/.idea/*
 .DS_Store
-Chapter_1/CodeLab_1//build
-Chapter_1/CodeLab_1/captures
-Chapter_1/CodeLab_1/.externalNativeBuild
-Chapter_1/CodeLab_1/.cxx
+Chapter_1/*//build
+Chapter_1/*/captures
+Chapter_1/*/.externalNativeBuild
+Chapter_1/*/.cxx
 local.properties
