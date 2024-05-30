@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,13 +27,30 @@ import androidx.compose.ui.unit.dp
 import com.hanix.compose.composelayout.R
 import com.hanix.compose.composelayout.ui.theme.ComposeLayoutTheme
 
+data class DrawableStringPair(
+    @DrawableRes val drawable: Int,
+    @StringRes val text: Int
+)
+
+private val alignYourBodyData = listOf(
+    R.drawable.ab1_inversions to R.string.ab1_inversions,
+    R.drawable.ab2_quick_yoga to R.string.ab2_quick_yoga,
+    R.drawable.ab3_stretching to R.string.ab3_stretching,
+    R.drawable.ab4_tabata to R.string.ab4_tabata,
+    R.drawable.ab5_hiit to R.string.ab5_hiit,
+    R.drawable.ab6_pre_natal_yoga to R.string.ab6_pre_natal_yoga
+).map { DrawableStringPair(it.first, it.second) }
+
 @Composable
 fun AlignYourBodyElement(
     @DrawableRes image: Int,
     @StringRes text: Int,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier.padding(top = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Image(
             painter = painterResource(image),
             contentDescription = null,
@@ -61,25 +79,29 @@ fun AlignYourBodyElementPreview() {
         )
     }
 }
-//
-//@Composable
-//fun AlignYourBodyRow(modifier: Modifier = Modifier) {
-//    LazyRow(modifier = modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(8.dp), contentPadding = PaddingValues(horizontal = 16.dp)) {
-//        items(alignYourBodyData) { item ->
-//            AlignYourBodyElement(
-//                image = item.drawable,
-//                text = item.text,
-//                modifier = modifier
-//            )
-//        }
-//
-//    }
-//}
-//
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun AlignYourBodyRowPreview() {
-//    ComposeLayoutTheme {
-//        AlignYourBodyRow()
-//    }
-//}
+
+@Composable
+fun AlignYourBodyRow(modifier: Modifier = Modifier) {
+    LazyRow(
+        modifier = modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp)
+    ) {
+        items(alignYourBodyData) { item ->
+            AlignYourBodyElement(
+                image = item.drawable,
+                text = item.text,
+                modifier = modifier
+            )
+        }
+
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun AlignYourBodyRowPreview() {
+    ComposeLayoutTheme {
+        AlignYourBodyRow()
+    }
+}
