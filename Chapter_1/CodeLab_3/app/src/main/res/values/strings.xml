@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Compose2</string>
-    <string name="count_glass">You've had $1$s glasses.</string>
+    <string name="count_glass">You\'ve had %1$s glasses.</string>
 </resources>
