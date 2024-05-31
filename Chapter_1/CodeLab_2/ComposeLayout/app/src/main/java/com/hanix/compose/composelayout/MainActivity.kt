@@ -25,8 +25,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeLayoutTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                }
+//                Scaffold(modifier = Modifier.fillMaxSize()) {
+//                    Text(
+//                        text = "Hello!",
+//                    )
+//                }
             }
         }
     }
